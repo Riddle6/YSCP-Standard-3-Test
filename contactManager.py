@@ -4,7 +4,7 @@ contacts = {}
 # Function to add a new contact
 def add_contact():
 
-    contact_name = input("\nEnter the contact's name: ").strip().capitalize()
+    contact_name = input("\nEnter the contact's name: ").strip()
 
     contacts[contact_name] = {} # Nested Dictionary created
         
@@ -15,29 +15,36 @@ def add_contact():
     # Value of the nested dictionary is set to the contact email.
 
     print(f"\nContact for {contact_name} added successfully.\n")
+    return contact_name, contact_number, contact_email
     
     
 # Function to view all contacts
-def display_contacts():
+def display_contacts(contact_name):
     
     if contacts == {}:
         print("\nNo Contacts Available.\n")
     else:
         print("\n--- All Contacts ---")
-        for key, value in contacts.items():
-            print(f"{contacts}: Phone - {contacts[key]} \n")
-        
+
+        for key in contacts.items():
+            print(f"\n{key[0]}: Phone - {contact_name[1]}, Email - {contact_name[2]}")
+
+    return contact_name
+
 
 # Function to search for a contact by name
-def search_contact():
+def search_contact(contact_name):
     
     search_contacts = input("Enter the name of the contact to search for: ").strip()
 
     if search_contacts in contacts:
-        print(f"Contacts found: {contacts} ") # W.I.P
-    
+        
+        print(f"\nContacts found: {contact_name[0]}: Phone - {contact_name[1]}, Email - {contact_name[2]}\n")
+
     else:
-        print(f"Contacts for {search_contacts} not found.")
+        print(f"\nContacts for {search_contacts} not found.")
+
+    return contact_name
 
 # Function to remove a contact
 def remove_contact():
@@ -49,23 +56,28 @@ def remove_contact():
         print(f"Contact for {remove_contacts} removed successfully!\n")
 
     else:
-        print(f"\nContacts for {remove_contacts} not found.\n")
+        print(f"\nContacts for {remove_contacts} not found.")
 
 
 # Function to update a contact's information
-def update_contact():
+def update_contact(contact_name):
 
+    
     update_contacts = input("Enter the name of the contact to update: ").strip()
 
     if update_contacts in contacts:
+
         new_number = input("Enter the new phone number: ").strip()
 
         new_email = input("Enter the new email address: ").strip()
-        # W.I.P
         
+        contacts[update_contacts][new_number] = new_email
+        print(contacts)
+
 
     else:
         print(f"Contacts for {update_contacts} not found.")
+
 
 # Main function to run the menu-driven system
 def main():
@@ -75,19 +87,19 @@ def main():
         
 
         if option == 1:
-            add_contact()
+            contact_name = add_contact()
             
         elif option == 2:
-            display_contacts()
+            display_contacts(contact_name)
 
         elif option == 3:
-            search_contact()
+            search_contact(contact_name)
 
         elif option == 4:
             remove_contact()
 
         elif option == 5:
-            update_contact()
+            update_contact(contact_name)
 
         elif option == 6:
             print("\nThank you for using Contact Manager!")
@@ -99,7 +111,7 @@ def main():
 
 
 def display_menu():
-    print("--- Contact Manager ---")
+    print("\n--- Contact Manager ---")
     print("1. Add Contact")
     print("2. View All Contacts")
     print("3. Seach for a Contact")
@@ -114,10 +126,10 @@ def display_menu():
             if option >= 1 and option <= 6:
                 return option
             else:
-                print("\nOption out of range! Please try again.\n")
+                print("\nOption does not exist! Please try again.\n")
             
         except ValueError:
-            print("\nError! That is not a number! Please try again.\n")
+            print("\nError! That is not a valid option! Please try again.\n")
 
 if __name__ == "__main__":
     main()
